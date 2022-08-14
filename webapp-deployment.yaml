@@ -2,9 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: webapp-mysql
+  namespace: final
   labels:
     app.kubernetes.io/app: webapp
     app.kubernetes.io/name: webapp-mysql
+  annotations:
+    flux.weave.works/automated: "true"
 spec:
   selector:
     matchLabels:
