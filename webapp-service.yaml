@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-mysql
+  labels:
+    app.kubernetes.io/app: webapp
+    app.kubernetes.io/name: webapp-mysql
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app.kubernetes.io/app: webapp
+    app.kubernetes.io/name: webapp-mysql
