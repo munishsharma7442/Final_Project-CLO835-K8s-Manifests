@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -23,14 +24,11 @@ spec:
       serviceAccountName: clo-835
       containers:
       - name: aws-cli
-        image: amazon/aws-cli:latest
-        command: ["/bin/sh","-c"]
+        image: amazon/aws-cli:arm64
+        command: ["/bin/sh", "-c"]
         args:
-        - echo starting;
-          aws s3 cp s3://clo835-project/failed.png /tmp/s3_image;
-          aws s3 cp s3://clo835-project/success.jpg /tmp/s3_image;
-          sleep 9000;
-          echo done;
+        - echo starting; aws s3 cp s3://clo835-project/failed.png /tmp/s3_image; aws
+          s3 cp s3://clo835-project/success.jpg /tmp/s3_image; sleep 9000; echo done;
         volumeMounts:
         - name: s3-image
           mountPath: /tmp/s3_image
@@ -41,9 +39,9 @@ spec:
             cpu: 200m
           requests:
             cpu: 200m
-      
+
       - name: webapp-mysql
-        image: 397002225899.dkr.ecr.us-east-1.amazonaws.com/clo835:v16
+        image: 397002225899.dkr.ecr.us-east-1.amazonaws.com/clo835:webapp-v11
         volumeMounts:
         - name: db-secret-volume
           mountPath: "/opt/app-secret-volumes"
@@ -51,24 +49,24 @@ spec:
         - name: s3-image
           mountPath: /clo835/config/image_url
         envFrom:
-          - secretRef:
-              name: db-secret
+        - secretRef:
+            name: db-secret
         env:
         - name: IMAGE_URL_PATH
-          valueFrom: 
+          valueFrom:
             configMapKeyRef:
               name: webapp-config
               key: IMAGE_URL_PATH
         - name: IMAGE_URL_S3
-          valueFrom: 
+          valueFrom:
             configMapKeyRef:
               name: webapp-config
               key: IMAGE_URL_S3
         - name: GROUP
-          valueFrom: 
+          valueFrom:
             configMapKeyRef:
               name: webapp-config
-              key:  GROUP
+              key: GROUP
         ports:
         - containerPort: 8080
         lifecycle:
@@ -81,10 +79,8 @@ spec:
           requests:
             cpu: 1000m
       volumes:
-        - name: db-secret-volume
-          secret:
-            secretName: db-secret
-        - name: s3-image
-          emptyDir: {}
-      
-            
+      - name: db-secret-volume
+        secret:
+          secretName: db-secret
+      - name: s3-image
+        emptyDir: {}
