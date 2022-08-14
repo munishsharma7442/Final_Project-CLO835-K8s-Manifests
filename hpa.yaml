@@ -10,4 +10,4 @@ spec:
     name: webapp-mysql
   minReplicas: 1
   maxReplicas: 10
-  targetCPUUtilizationPercentage: 2
+  targetCPUUtilizationPercentage: 50
