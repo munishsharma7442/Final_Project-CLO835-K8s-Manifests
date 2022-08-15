@@ -27,8 +27,11 @@ spec:
         image: amazon/aws-cli:arm64
         command: ["/bin/sh", "-c"]
         args:
-        - echo starting; aws s3 cp s3://clo835-project/failed.png /tmp/s3_image; aws
-          s3 cp s3://clo835-project/success.jpg /tmp/s3_image; sleep 9000; echo done;
+        - echo starting; 
+          aws s3 cp s3://clo835-project/failed.png /tmp/s3_image;
+          aws s3 cp s3://clo835-project/success.jpg /tmp/s3_image;
+          sleep 9000;
+          echo done;
         volumeMounts:
         - name: s3-image
           mountPath: /tmp/s3_image
