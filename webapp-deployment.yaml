@@ -72,15 +72,15 @@ spec:
               key: GROUP
         ports:
         - containerPort: 81
-        lifecycle:
-          postStart:
-            exec:
-              command: ["/bin/sh", "-c", "cp /clo835/config/image_url/* static/"]
-        resources:
-          limits:
-            cpu: 1000m
-          requests:
-            cpu: 1000m
+        #lifecycle:
+        #   postStart:
+        #     exec:
+        #       command: ["/bin/sh", "-c", "cp /clo835/config/image_url/* static/"]
+        # resources:
+        #   limits:
+        #     cpu: 1000m
+        #   requests:
+        #     cpu: 1000m
       volumes:
       - name: db-secret-volume
         secret:
